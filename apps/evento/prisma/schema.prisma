@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+
+
+model attendance {
+  id               BigInt   @id @default(autoincrement())
+  time             DateTime @db.Time(6)
+  date             DateTime @db.Date
+  created_at       DateTime @default(now()) @db.Timestamptz(6)
+  is_active        Boolean  @default(true)
+  school_id        String
+  is_time_in       Boolean
+  scanned_by_email String?
+
+  @@index([school_id])
+}
+
+
+
+model events {
+  id          BigInt         @id @default(autoincrement())
+  created_at  DateTime       @default(now()) @db.Timestamptz(6)
+  name        String
+  date        DateTime       @db.Date
+  description String?
+  location    String?
+  is_active   Boolean        @default(true)
+  duration    event_duration
+}
+
+
+
+model eventors {
+  id          BigInt         @id @default(autoincrement())
+  name        String
+  description String?
+  is_active   Boolean        @default(true)
+}
+
+
+
+enum event_duration {
+  AM_ONLY
+  PM_ONLY
+  AM_AND_PM
+}
+
+
+
+
+
+
+// model departments {
+//   id         BigInt     @id @default(autoincrement())
+//   created_at DateTime   @default(now()) @db.Timestamptz(6)
+//   short_name String?
+//   name       String?
+//   is_active  Boolean    @default(true)
+//   students   students[]
+// }
+
+
+
+// model students {
+//   id          BigInt       @id @default(autoincrement())
+//   created_at  DateTime     @default(now()) @db.Timestamptz(6)
+//   school_id   String       @unique
+//   dept_id     Int?
+//   is_active   Boolean      @default(true)
+//   first_name  String
+//   last_name   String
+//   departments departments? @relation(fields: [dept_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+// }
+
+// model users {
+//   id         BigInt   @id @default(autoincrement())
+//   created_at DateTime @default(now()) @db.Timestamptz(6)
+//   email      String   @unique
+//   is_active  Boolean  @default(true)
+//   role       Int      @db.SmallInt
+//   name       String
+// }
