@@ -3,7 +3,7 @@
 
 import AttendanceCard from "@/components/AttendanceCard";
 import { Separator } from "@/components/ui/separator";
-import { getAllAttendance, getRecentAttendance, RecentAttendanceRecord, type Attendance, type AttendanceRecord } from "@repo/models/Attendance"
+import { getRecentAttendance, RecentAttendanceRecord, type Attendance, type AttendanceRecord } from "@repo/models/Attendance"
 import { Student } from "@repo/models/Student";
 import { useQuery } from "@tanstack/react-query";
 

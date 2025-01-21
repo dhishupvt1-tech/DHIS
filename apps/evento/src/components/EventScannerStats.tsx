@@ -42,16 +42,15 @@ export default function EventScannerStats() {
         console.log("Date changed:", date);
     }, [date]);
 
-    const filteredData = data.filter((stat) => {
+    const filteredData = Array.isArray(data) ? data.filter((stat) => {
         if (!date) return true;
         return stat.date === format(date, "yyyy-MM-dd");
-    });
+    }) : [];
 
-    const filteredEventData = eventsData.find((stat) => {
+    const filteredEventData = Array.isArray(eventsData) ? eventsData.find((stat) => {
         if (!date) return true;
         return stat.date === format(date, "yyyy-MM-dd");
-    });
-
+    }) : null;
 
     useEffect(() => {
         const container = containerRef.current;
@@ -77,13 +76,7 @@ export default function EventScannerStats() {
 
     return (
         <div className='flex flex-col gap-2'>
-
             <div className='flex gap-4 items-center'>
-                {/* <div className="font-semibold flex items-center text-sm mt-2 gap-2">
-                    <PieChart className="size-5" />
-                    <span className='text-nowrap'>Event Scanner</span>
-                </div> */}
-
                 <Popover>
                     <PopoverTrigger asChild>
                         <Button
@@ -95,7 +88,6 @@ export default function EventScannerStats() {
                         >
                             <CalendarIcon className="mr-2 h-4 w-4" />
                             <p className='font-medium'>{date ? format(date, "PPP") : <span>Pick a date</span>}</p>
-
                         </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0">
@@ -109,22 +101,19 @@ export default function EventScannerStats() {
                 </Popover>
             </div>
 
-
             {filteredEventData && (
                 <div>
                     <div className="bg-muted rounded-md p-4 gap-2 flex justify-evenly">
                         <div className='flex-col flex items-center'>
                             <p className='text-xs font-medium'>
-
                                 Total Time In
                             </p>
 
                             <p className='font-bold text-lg flex gap-1 items-center'>
                                 <LogIn className='size-4' />
-                                {filteredEventData?.time_in_count}
+                                {filteredEventData?.time_in_count || 0}
                             </p>
                         </div>
-
 
                         <div className='flex-col flex items-center'>
                             <p className='text-xs font-medium'>
@@ -132,15 +121,13 @@ export default function EventScannerStats() {
                             </p>
                             <p className='font-bold flex gap-1 items-center text-lg'>
                                 <LogOut className='size-4' />
-                                {filteredEventData?.time_out_count}
+                                {filteredEventData?.time_out_count || 0}
                             </p>
                         </div>
 
                     </div>
                 </div>
             )}
-
-
 
             <div className="relative">
                 <div
@@ -164,7 +151,7 @@ export default function EventScannerStats() {
                                             <LogIn className='size-3' />
                                         </p>
                                         <Badge variant={"outline"}>
-                                            {stat.time_in_count}
+                                            {stat.time_in_count || 0}
                                         </Badge>
                                     </div>
                                     <div className='flex justify-between'>
@@ -173,7 +160,7 @@ export default function EventScannerStats() {
                                             <LogOut className='size-3' />
                                         </p>
                                         <Badge variant={"outline"}>
-                                            {stat.time_out_count}
+                                            {stat.time_out_count || 0}
                                         </Badge>
                                     </div>
                                 </div>

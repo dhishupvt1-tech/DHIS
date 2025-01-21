@@ -9,9 +9,6 @@ import { cn } from "@/lib/utils";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ReactQueryProvider } from "./ReactQueryProvider";
 import Sidebar from "@/components/Sidebar";
-
-import { ClerkProvider } from '@clerk/nextjs'
-import AuthGuard from "@/components/auth/AuthGuard";
 import OfflineHeader from "@/components/OfflineHeader";
 import { Analytics } from "@vercel/analytics/react"
 
@@ -39,7 +36,6 @@ export default function RootLayout({
 
 
 	return (
-		<ClerkProvider afterSignOutUrl={"/sign-in"}>
 			<ReactQueryProvider>
 				<html lang="en">
 					<body
@@ -56,7 +52,7 @@ export default function RootLayout({
 							enableSystem
 							disableTransitionOnChange
 						>
-							<AuthGuard>
+
 
 								{/* <ReactQueryDevtools /> */}
 
@@ -97,12 +93,11 @@ export default function RootLayout({
 
 								<Analytics />
 
-							</AuthGuard>
+
 						</ThemeProvider>
 
 					</body>
 				</html>
 			</ReactQueryProvider>
-		</ClerkProvider >
 	);
 }

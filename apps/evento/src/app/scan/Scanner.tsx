@@ -18,7 +18,6 @@ import { motion } from 'framer-motion';
 import { useAttendanceStore } from "@/store/useAttendanceStore";
 import { LogIn, LogOut, TriangleAlert, UserRound } from 'lucide-react';
 import useOnlineStatus from "@/hooks/useOnlineStatus";
-import { useAuth } from "@/hooks/useAuth";
 import { useCurrentUserStore } from '@/store/useCurrentUserStore';
 import { de } from '@faker-js/faker';
 import { Label } from "@/components/ui/label"
@@ -44,8 +43,6 @@ export default function Scanner() {
     const [scannedStatus, setScannedStatus] = useState<"TIMED IN" | "TIMED OUT" | null>(null);
     const [scannedMessage, setScannedMessage] = useState<string>("");
 
-
-    // const currentLoggedUserEmail = String(useAuth().user?.emailAddresses[0].emailAddress)
 
     const currentLoggedUserEmail = useCurrentUserStore(state => state.email);
 
@@ -104,13 +101,6 @@ export default function Scanner() {
         setTimeout(resumeScanner, milliseconds);
     };
 
-
-    //! DEPRECATED
-    // const splitIdAndName = (input: String) => {
-    //     const [id, ...nameParts] = input.split(',');
-    //     const name = nameParts.join(',').trim();
-    //     return { id: id.trim(), name };
-    // };
 
 
     function extractQRCodeData(input: string): { schoolId: string, firstName: string, lastName: string, deptId: number } {

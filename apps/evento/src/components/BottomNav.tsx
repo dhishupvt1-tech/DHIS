@@ -6,14 +6,12 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { unknown } from "zod";
 import { ModeToggle } from "./ModeToggle";
-import { useAuth } from "@/hooks/useAuth";
 import useNavStore from "@/store/useNavStore";
 
 export default function BottomNav() {
 	const pathname = usePathname();
 	const [activeLink, setActiveLink] = useState("");
 
-	const { currentUserRole } = useAuth()
 
 	useEffect(() => {
 		if (pathname) {
@@ -68,13 +66,6 @@ export default function BottomNav() {
 						<CalendarFold size={24} />
 						{/* <span className="text-xs scale-75 tracking-wider font-semibold">Events</span> */}
 					</Link>
-
-					{currentUserRole === "ADMIN" &&
-						<Link href="/admin" className={linkClasses("admin")}>
-							<Lock size={24} />
-							{/* <span className="text-xs scale-75 tracking-wider font-semibold">Manage</span> */}
-						</Link>
-					}
 				</div>
 			</nav>
 		);

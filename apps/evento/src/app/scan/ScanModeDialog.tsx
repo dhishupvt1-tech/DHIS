@@ -27,7 +27,7 @@ import { Label } from "@/components/ui/label";
 import { Student } from "@repo/models/Student";
 import useMediaQuery from "@custom-react-hooks/use-media-query";
 import { TableProperties, CircleAlert, Eye, AlignLeft, GalleryHorizontalEnd, LogIn, LogOut, CircleDashed } from "lucide-react";
-import AttendanceHistory from "../history/AttendanceHistory";
+import AttendanceHistory from "../../components/AttendanceHistory";
 import { SwitchIcon } from "@radix-ui/react-icons";
 import useScanModeStore from "@/store/useScanModeStore";
 import { useEffect, useState } from "react";

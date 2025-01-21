@@ -17,11 +17,10 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import type React from "react";
-import AttendanceHistory from "./history/AttendanceHistory";
+import AttendanceHistory from "../components/AttendanceHistory";
 import Account from "@/components/Account";
 import { getAllUsers, User } from "@repo/models/User";
 import { useQuery } from "@tanstack/react-query";
-import { useClerk, useUser } from "@clerk/nextjs";
 import FeaturesCarousel from "@/components/FeaturesCarousel";
 import { ModeToggle } from "@/components/ModeToggle";
 import { getStudentRowCount } from "@repo/models/Student";
@@ -68,7 +67,6 @@ export default function Home() {
 					</h2>
 				</div>
 
-
 				<Account />
 			</div>
 
@@ -107,7 +105,7 @@ export default function Home() {
 			</div>
 
 
-			{/* 
+			{/*
 			<div className="font-semibold text-pretty flex items-center text-sm mt-2 gap-2">
 				<Map className="size-5" />
 				<span>Explore Features</span>

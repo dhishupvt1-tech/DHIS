@@ -51,13 +51,6 @@ export type GroupedAttendance = {
 const getCurrentTime = (): string =>
   new Date().toLocaleTimeString("en-US", { hour12: false });
 
-const getTodayDateRange = () => {
-  const today = new Date().toISOString().slice(0, 10);
-  return {
-    startOfDay: `${today}T00:00:00.000Z`,
-    endOfDay: `${today}T23:59:59.999Z`,
-  };
-};
 
 const getCurrentDate = (): string => {
   return format(new Date(), "yyyy-MM-dd");
@@ -183,44 +176,6 @@ export const createOrUpdateAttendanceRecord = async (
   return data[0] as Attendance;
 };
 
-//* V1
-// Create or update an attendance record for a student
-// export const createOrUpdateAttendanceRecord = async (
-//   schoolId: string,
-//   scannedByEmail: string,
-// ): Promise<Attendance | null> => {
-//   const records = await fetchTodayRecords(schoolId);
-
-//   if (isEarlyTimeOut(records)) {
-//     throw new Error("EARLY_TIMEOUT");
-//   }
-
-//   if (isEarlyTimeIn(records)) {
-//     throw new Error("EARLY_TIMEIN");
-//   }
-
-//   if (hasCompleteRecords(records)) {
-//     return null; // Exit if there are already two complete records
-//   }
-
-//   const isTimeIn = records.length % 2 === 0;
-
-//   const { data, error } = await supabase
-//     .from("attendance")
-//     .insert({
-//       date: getCurrentDate(),
-//       school_id: schoolId,
-//       time: getCurrentTime(),
-//       is_time_in: isTimeIn,
-//       scanned_by_email: scannedByEmail,
-//     } as Attendance)
-//     .select("*");
-
-//   if (error)
-//     throw new Error("Error adding new attendance record: " + error.message);
-
-//   return data[0] as Attendance;
-// };
 
 //! DEPRECATED
 // Fetch all attendance records with student details
@@ -250,46 +205,6 @@ export const getRecentAttendance = async (): Promise<
   return data as RecentAttendanceRecord[];
 };
 
-//* V2
-export const getAllAttendance = async (): Promise<Attendance[]> => {
-  const { data, error } = await supabase
-    .from("attendance")
-    .select("*")
-    .order("date", { ascending: false })
-    .order("time", { ascending: false })
-    .limit(100);
-
-  if (error) throw new Error("Error fetching attendance: " + error.message);
-
-  return data as Attendance[];
-};
-
-//* V1
-// export const getAllAttendance = async (): Promise<Attendance[]> => {
-//   const { data, error } = await supabase
-//     .from("attendance")
-//     .select("*")
-//     .order("time, date");
-
-//   if (error) throw new Error("Error fetching attendance: " + error.message);
-
-//   return data as Attendance[];
-// };
-
-// Fetch attendance records by student ID
-export const getAttendanceRecordsByStudentId = async (
-  studentId: number
-): Promise<Attendance[]> => {
-  const { data, error } = await supabase
-    .from("attendance")
-    .select("*")
-    .eq("student_id", studentId);
-
-  if (error)
-    throw new Error("Error fetching attendance records: " + error.message);
-
-  return data as Attendance[];
-};
 
 // Fetch attendance records by student ID
 export const getAttendanceRecordsBySchoolId = async (

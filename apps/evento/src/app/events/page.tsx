@@ -55,7 +55,6 @@ import Link from "next/link";
 import { useState } from "react";
 import EventFormDialog from "./EventFormDialog";
 import { generateCSV } from "@/utils/utils";
-import { get } from "react-hook-form";
 
 export default function EventsPage() {
 	const {

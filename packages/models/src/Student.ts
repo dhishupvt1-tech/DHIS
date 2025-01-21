@@ -32,17 +32,6 @@ export async function getStudentBySchoolId(schoolId: string) {
   return data;
 }
 
-//! V1 DEPRECATED this function does not directly query  the database, instead it uses the students data from the cache which fetches all students at once
-// export function getStudentBySchoolId(
-//   students: Student[],
-//   schoolId: string
-// ): Student | undefined {
-//   const student = students.find((student) => student.school_id === schoolId);
-
-//   console.log("Student found:", student);
-//   return student;
-// }
-
 export async function getAllStudents(): Promise<Student[]> {
   const { data, error } = await supabase.from("students").select("*");
 

@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Account from "./Account";
 import { ModeToggle } from "./ModeToggle";
-import { useAuth } from "@/hooks/useAuth";
 
 
 export default function Sidebar() {
@@ -15,7 +14,6 @@ export default function Sidebar() {
     const pathname = usePathname();
     const [activeLink, setActiveLink] = useState("");
 
-    const { currentUserRole } = useAuth()
 
     useEffect(() => {
         if (pathname) {
@@ -58,17 +56,6 @@ export default function Sidebar() {
                 </div>
 
 
-                {currentUserRole === "ADMIN" &&
-                    <>
-                        <Link href="/admin" className={linkClasses("admin")}>
-                            <Lock className="size-5" />Manage Access
-                        </Link>
-
-                        {/* <Separator className="" /> */}
-                    </>
-                }
-
-
 
                 <Link href="/" className={linkClasses("home")}>
                     <House className="size-5" />Home
@@ -88,7 +75,7 @@ export default function Sidebar() {
 
 
 
-                {/* 
+                {/*
                 <Link href="/scan" className="p-3 rounded-lg hover:bg-neutral-500 hover:bg-opacity-20 transition-all font-semibold w-full flex gap-2">
                     <Scan />Departments
                 </Link> */}
