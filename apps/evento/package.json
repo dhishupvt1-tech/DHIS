@@ -54,6 +54,7 @@
     "is-online": "^10.0.0",
     "lucide-react": "^0.396.0",
     "next": "^14.2.5",
+    "next-auth": "^5.0.0-beta.25",
     "next-themes": "^0.3.0",
     "qrcode": "^1.5.3",
     "qrcode.react": "^3.1.0",
