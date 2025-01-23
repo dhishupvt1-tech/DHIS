@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
-import BottomNav from "@/components/BottomNav";
+import BottomNav from "@/components/navigation/BottomNav";
 import Header from "@/components/Header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ReactQueryProvider } from "./ReactQueryProvider";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/navigation/Sidebar";
 import OfflineHeader from "@/components/OfflineHeader";
 import { Analytics } from "@vercel/analytics/react"
 import { SessionProvider } from "next-auth/react"

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { unknown } from "zod";
-import { ModeToggle } from "./ModeToggle";
+import { ModeToggle } from "../ModeToggle";
 import useNavStore from "@/store/useNavStore";
 
 export default function BottomNav() {
@@ -41,7 +41,7 @@ export default function BottomNav() {
 		return null
 	}
 
-	if (pathname !== "/sign-in") {
+	/*if (pathname !== "/sign-in") {*/
 		return (
 			<nav className="w-full z-50">
 				{/* <nav className="fixed bottom-0 w-full bg-background border-t z-50"> */}
@@ -69,5 +69,5 @@ export default function BottomNav() {
 				</div>
 			</nav>
 		);
-	}
+	/*}*/
 }

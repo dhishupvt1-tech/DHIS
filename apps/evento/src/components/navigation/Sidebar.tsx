@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { CalendarFold, House, Scan, UsersRound, Lock } from "lucide-react";
-import { Separator } from "./ui/separator";
+import { Separator } from "../ui/separator";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import Account from "./Account";
-import { ModeToggle } from "./ModeToggle";
+import Account from "../Account";
+import { ModeToggle } from "../ModeToggle";
 
 
 export default function Sidebar() {
@@ -37,7 +37,7 @@ export default function Sidebar() {
     `;
 
 
-    if (pathname !== "/sign-in") {
+    /*if (pathname !== "/sign-in") {*/
         return (
             <nav className="border-r p-3 flex-col flex gap-1 h-full w-72">
                 <div className="flex items-center gap-1">
@@ -46,33 +46,33 @@ export default function Sidebar() {
                     </p>
 
                     <div className="opacity-50">
-                        <ModeToggle compactMode={true} />
+                        <ModeToggle compactMode={true}/>
                     </div>
                 </div>
 
 
-                <div className="p-3 rounded-lg items-center hover:bg-neutral-500 hover:bg-opacity-20 flex cursor-pointer">
-                    <Account />
+                {/*<div className="p-3 rounded-lg items-center hover:bg-neutral-500 hover:bg-opacity-20 flex cursor-pointer">*/}
+                <div className="mb-1">
+                    <Account/>
                 </div>
 
-
+                {/*</div>*/}
 
                 <Link href="/" className={linkClasses("home")}>
-                    <House className="size-5" />Home
+                    <House className="size-5"/>Home
                 </Link>
 
                 <Link href="/students" className={linkClasses("students")}>
-                    <UsersRound className="size-5" />Students
+                    <UsersRound className="size-5"/>Students
                 </Link>
 
                 <Link href="/events" className={linkClasses("events")}>
-                    <CalendarFold className="size-5" />Events
+                    <CalendarFold className="size-5"/>Events
                 </Link>
 
                 <Link href="/scan" className={linkClasses("scan")}>
-                    <Scan className="size-5" />Scan
+                    <Scan className="size-5"/>Scan
                 </Link>
-
 
 
                 {/*
@@ -81,8 +81,8 @@ export default function Sidebar() {
                 </Link> */}
             </nav>
         )
-    }
+    /*}*/
 
-    return (<nav></nav>)
+    /*return (<nav></nav>)*/
 
 }

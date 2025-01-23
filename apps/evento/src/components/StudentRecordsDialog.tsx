@@ -45,7 +45,7 @@ import { useQuery } from "@tanstack/react-query";
 import { format, parseISO } from "date-fns";
 import { TableProperties, CircleAlert, Eye, AlignLeft, LogIn, LogOut, Calendar } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { truncateString } from "@/utils/utils";
+import { truncateString } from "@/lib/utils/utils";
 import AttendanceRecords from "./AttendanceRecords";
 
 type StudentRecordsDialogProps = {

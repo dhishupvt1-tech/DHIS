@@ -26,9 +26,20 @@ import { ModeToggle } from "@/components/ModeToggle";
 import { getStudentRowCount } from "@repo/models/Student";
 import { getEventRowCount } from "@repo/models/Event";
 import EventScannerStats from "@/components/EventScannerStats";
+import QRCodeGenerator from "@/components/QRCodeGenerator";
+import {IdCardIcon} from "@radix-ui/react-icons";
+import {useSession} from "next-auth/react";
+import {Button} from "@/components/ui/button";
+import GoogleIcon from "@mui/icons-material/Google";
 
 
 export default function Home() {
+
+	const { data: session } = useSession();
+
+	const user = session?.user;
+
+
 
 	const {
 		data: studentsRowCount = 0,
@@ -54,12 +65,12 @@ export default function Home() {
 		<section className="flex flex-col p-2 gap-3 rounded-md h-full">
 			{/* TOP SECTION */}
 
-			<div className="flex justify-between items-center gap-4 mb-8 lg:hidden  bg-opacity-80">
+			<div className="flex justify-between items-center gap-4 mb-4 lg:hidden  bg-opacity-80">
 				<div className="flex gap-2 items-center">
 					<h1 className="font-bold text-xl text-pretty">{appName}</h1>
 
 					<div className="opacity-50 scale-90">
-						<ModeToggle compactMode={true} />
+						<ModeToggle compactMode={true}/>
 					</div>
 
 					<h2 className="tracking-wide text-xs opacity-50 flex-auto">
@@ -67,9 +78,8 @@ export default function Home() {
 					</h2>
 				</div>
 
-				<Account />
+				<Account/>
 			</div>
-
 
 
 			<div className="flex justify-between items-center">
@@ -77,75 +87,71 @@ export default function Home() {
 					Home
 				</h2>
 
+
 				<div className="flex gap-2">
 					<div className="flex-col flex ">
 						<p className="font-bold text-right flex gap-2 items-center py-2 px-3  bg-neutral-500 bg-opacity-10 rounded-md">
-							<UsersRound className="size-4" />
+							<UsersRound className="size-4"/>
 							{studentsRowCount}
 						</p>
-						{/* <p className="text-xs font-semibold text-center py-1 px-3  rounded-b-md bg-neutral-500 bg-opacity-10">
-							Students
-						</p> */}
-
 					</div>
 					<div className="flex-col flex ">
 
 						<p className="font-bold text-right flex gap-2 items-center py-2 px-3  bg-neutral-500 bg-opacity-10 rounded-md">
-							<CalendarFold className="size-4" />
+							<CalendarFold className="size-4"/>
 							{eventsRowCount}
 						</p>
-						{/* <p className="text-xs font-semibold text-center py-1 px-3  rounded-b-md bg-neutral-500 bg-opacity-10">
-							Events
-						</p> */}
-
 					</div>
 				</div>
-
-
 			</div>
 
 
-			{/*
-			<div className="font-semibold text-pretty flex items-center text-sm mt-2 gap-2">
+
+		{/*	<div className="font-semibold text-pretty flex items-center text-sm mt-2 gap-2">
 				<Map className="size-5" />
 				<span>Explore Features</span>
 			</div>
-			<FeaturesCarousel /> */}
-
-
-
-
+			<FeaturesCarousel />*/}
 
 
 			<div className="font-semibold text-pretty flex items-center text-sm mt-2 gap-2">
-				<PieChart className="size-5" />
+				<PieChart className="size-5"/>
 				<span>Statistics</span>
-
 			</div>
 
-			<EventScannerStats />
-
-
-
+			<EventScannerStats/>
 
 
 			<div className="flex justify-between">
 				<div className="font-semibold text-pretty flex items-center text-sm mt-2 gap-2">
-					<QrCode className="size-5" />
+					<QrCode className="size-5"/>
 					<span>Recent Scan Results</span>
 				</div>
 
 				<div className="font-semibold text-pretty opacity-50 flex items-center text-sm mt-2 gap-2">
-					<RotateCw className="size-5" />
+					<RotateCw className="size-5"/>
 					Refresh
 				</div>
 			</div>
 
-
-
 			<div className="overflow-auto flex-1 rounded-lg">
-				<AttendanceHistory />
+				<AttendanceHistory/>
 			</div>
-		</section >
+
+
+
+
+			{/*<div className="font-semibold text-pretty flex items-center text-sm mt-2 gap-2">
+				<IdCardIcon className="size-5"/>
+				<span>evento QR Code</span>
+			</div>*/}
+
+			{user?.email && user?.image && user?.name ? (
+				<QRCodeGenerator qrCodeText={user.email} photo={user.image} name={user.name} />
+			) : (
+				<QRCodeGenerator qrCodeText="0000" photo="" name="... ...." />
+			)}
+
+		</section>
 	);
 }

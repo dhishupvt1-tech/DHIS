@@ -22,7 +22,7 @@ import { useQuery } from "@tanstack/react-query";
 import { format, parseISO } from "date-fns";
 import { TableProperties, CircleAlert, Eye, AlignLeft, LogIn, LogOut, Calendar } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { truncateString } from "@/utils/utils";
+import { truncateString } from "@/lib/utils/utils";
 
 type AttendanceSectionProps = {
     groupedAttendanceRecords: GroupedAttendance[];
@@ -43,7 +43,7 @@ const AttendanceRecords: React.FC<AttendanceSectionProps> = ({ groupedAttendance
         return event && event.name;
     };
 
-    //*V1 
+    //*V1
     // const getEventNameFromDate = (events: Event[], date: string) => {
     // 	const event = events.find((event) => event.date === date);
     // 	return event ? event.name : formatDate(date);
