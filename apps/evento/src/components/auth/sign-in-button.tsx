@@ -1,5 +1,7 @@
 
 import { signIn } from "@/lib/auth"
+import {Button} from "@/components/ui/button";
+import GoogleIcon from '@mui/icons-material/Google';
 
 export default function SignInButton() {
     return (
@@ -9,7 +11,8 @@ export default function SignInButton() {
                 await signIn("google",{ redirectTo: "/" })
             }}
         >
-            <button type="submit">Signin with Google</button>
+            <Button type="submit" className="p-8 flex gap-4 rounded-xl"><GoogleIcon className=""/>Continue with Google</Button>
+
         </form>
     )
 }

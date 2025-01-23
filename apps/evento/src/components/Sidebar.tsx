@@ -41,7 +41,7 @@ export default function Sidebar() {
         return (
             <nav className="border-r p-3 flex-col flex gap-1 h-full w-72">
                 <div className="flex items-center gap-1">
-                    <p className="font-bold text-2xl py-3 pl-2 ">
+                    <p className="font-bold text-2xl py-3 pl-2 tracking-tighter ">
                         evento
                     </p>
 
@@ -51,7 +51,7 @@ export default function Sidebar() {
                 </div>
 
 
-                <div className="p-3 rounded-lg items-center hover:bg-neutral-500 hover:bg-opacity-20 flex">
+                <div className="p-3 rounded-lg items-center hover:bg-neutral-500 hover:bg-opacity-20 flex cursor-pointer">
                     <Account />
                 </div>
 

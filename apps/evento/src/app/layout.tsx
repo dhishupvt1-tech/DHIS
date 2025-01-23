@@ -11,7 +11,7 @@ import { ReactQueryProvider } from "./ReactQueryProvider";
 import Sidebar from "@/components/Sidebar";
 import OfflineHeader from "@/components/OfflineHeader";
 import { Analytics } from "@vercel/analytics/react"
-
+import { SessionProvider } from "next-auth/react"
 
 
 const fontSans = FontSans({
@@ -36,6 +36,9 @@ export default function RootLayout({
 
 
 	return (
+		<SessionProvider>
+
+
 			<ReactQueryProvider>
 				<html lang="en">
 					<body
@@ -99,5 +102,6 @@ export default function RootLayout({
 					</body>
 				</html>
 			</ReactQueryProvider>
+		</SessionProvider>
 	);
 }
