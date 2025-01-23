@@ -18,21 +18,12 @@ const ScanPage = () => {
 			<div className="flex gap-2 justify-between items-center">
 				<h1 className="text-2xl font-bold">Scan</h1>
 
-				{/* <div className='bg-red-500 size-3 rounded-full animate-pulse' /> */}
 				<div className="flex-auto  w-full">
-
 					<CurrentTimeAndDate />
 				</div>
-				{/* <Toggle variant="outline" aria-label="Toggle italic">
-					<Eye />
-				</Toggle> */}
-
-
 			</div>
 
 
-
-			{/* <Toaster /> */}
 			<div className="">
 				<Scanner />
 			</div>

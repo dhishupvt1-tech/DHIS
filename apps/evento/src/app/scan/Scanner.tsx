@@ -341,15 +341,9 @@ export default function Scanner() {
 
 
 
-            {/* {(!scannedStudent && html5QrcodeScannerRef.current?.getState() === Html5QrcodeScannerState.SCANNING) && (
+            {/*{!scannedStudent && (
                 <ScanModeDialog />
-            )} */}
-
-
-            {!scannedStudent && (
-                <ScanModeDialog />
-            )}
-
+            )}*/}
 
 
 

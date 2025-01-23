@@ -45,7 +45,7 @@ export default function Account() {
 
                         <div className="items-center order-first md:order-last">
                             <p className="text-xs opacity-50 hidden lg:block">Logged in as</p>
-                            <p className="text-sm font-semibold">{session?.user?.name}</p>
+                            <p className="text-sm font-semibold hidden lg:block">{session?.user?.name}</p>
                             {/* <p className="text-xs opacity-50 hidden lg:block">{session?.user?.email}</p>*/}
                         </div>
                     </div>

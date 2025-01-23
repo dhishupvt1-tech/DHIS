@@ -1,6 +1,16 @@
 "use client";
 
-import { CalendarFold, House, Lock, Scan, QrCode, UsersRound } from "lucide-react";
+import {
+	CalendarFold,
+	House,
+	Lock,
+	Scan,
+	QrCode,
+	UsersRound,
+	GalleryHorizontalEnd,
+	UserRound,
+	UserRoundIcon, Landmark, Circle, Component
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -17,14 +27,14 @@ export default function BottomNav() {
 		if (pathname) {
 			if (pathname === "/") {
 				setActiveLink("home");
-			} else if (pathname === "/students") {
-				setActiveLink("students");
-			} else if (pathname === "/scan") {
-				setActiveLink("scan");
+			} else if (pathname === "/records") {
+				setActiveLink("records");
+			} else if (pathname === "/eventors") {
+				setActiveLink("eventors");
 			} else if (pathname === "/events") {
 				setActiveLink("events");
-			} else if (pathname === "/admin") {
-				setActiveLink("admin");
+			} else if (pathname === "/profile") {
+				setActiveLink("profile");
 			}
 		}
 	}, [pathname]);
@@ -51,20 +61,25 @@ export default function BottomNav() {
 						{/* <span className="text-xs  scale-75 tracking-wider font-semibold">Home</span> */}
 					</Link>
 
-					<Link href="/students" className={linkClasses("students")}>
-						<UsersRound size={24} />
+					<Link href="/records" className={linkClasses("records")}>
+						<GalleryHorizontalEnd size={24} />
 						{/* <span className="text-xs  scale-75 tracking-wider font-semibold">Students</span> */}
 					</Link>
 
 
-					<Link href="/scan" className={linkClasses("scan")}>
-						<QrCode size={24} />
+					<Link href="/eventors" className={linkClasses("eventors")}>
+						<Component size={24} />
 						{/* <span className="text-xs scale-75 tracking-wider font-semibold">Scan</span> */}
 					</Link>
 
-					<Link href="/events" className={linkClasses("events")}>
+					{/*<Link href="/events" className={linkClasses("events")}>
 						<CalendarFold size={24} />
-						{/* <span className="text-xs scale-75 tracking-wider font-semibold">Events</span> */}
+						 <span className="text-xs scale-75 tracking-wider font-semibold">Events</span>
+					</Link>*/}
+
+					<Link href="/profile" className={linkClasses("profile")}>
+						<UserRoundIcon size={24} />
+						{/* <span className="text-xs scale-75 tracking-wider font-semibold">Scan</span> */}
 					</Link>
 				</div>
 			</nav>
