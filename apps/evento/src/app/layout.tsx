@@ -76,7 +76,7 @@ export default function RootLayout({
 
 
 
-									<div className="overflow-auto h-full w-full p-3">
+									<div className="overflow-auto h-full w-full">
 
 
 

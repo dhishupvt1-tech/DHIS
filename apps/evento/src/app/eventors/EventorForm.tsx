@@ -50,6 +50,7 @@ import {type Eventor} from "@prisma/client";
 import {Prisma} from "@prisma/client";
 import {EventorSchema} from "../../../prisma/generated/zod";
 import {addEventor, updateEventor} from "@/lib/actions/eventorActions";
+import {useSession} from "next-auth/react";
 
 
 const formSchema = EventorSchema;
@@ -63,6 +64,11 @@ type EventorFormProps = {
 const Eventor: Prisma.EventorSelect={id:true}
 
 export function EventorForm({ eventor, handleClose, handleError }: EventorFormProps) {
+
+    const { data: session } = useSession();
+    const user = session?.user;
+
+
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -106,7 +112,16 @@ export function EventorForm({ eventor, handleClose, handleError }: EventorFormPr
                     handleError?.("Error updating eventor");
                 });
         } else {
-            await addEventor(newEventor)
+
+
+
+
+
+            if(!user?.id){
+                return <div>Loading user...</div>
+            }
+
+            await addEventor(newEventor,user?.id)
                 .then(() => {
                     handleClose?.();
                     console.log("eventor form dialog should close now");
@@ -121,7 +136,7 @@ export function EventorForm({ eventor, handleClose, handleError }: EventorFormPr
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 border border-red-500 h-full">
                 <FormField
                     control={form.control}
                     name="name"
@@ -150,7 +165,7 @@ export function EventorForm({ eventor, handleClose, handleError }: EventorFormPr
                             <FormLabel>Description</FormLabel>
                             <FormControl>
                                 <Textarea
-                                    placeholder="Enter event description"
+                                    placeholder="Enter eventor description"
                                     className="resize-none"
                                     {...field}
                                 />
@@ -164,176 +179,13 @@ export function EventorForm({ eventor, handleClose, handleError }: EventorFormPr
                     )}
                 />
 
-                <FormField
-                    control={form.control}
-                    name="location"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel className="flex gap-2 items-center">
-                                Location
-                                {/* <MapPin className="size-4" /> */}
-                            </FormLabel>
-                            <FormControl>
-                                <Input placeholder="Enter event location" {...field} />
-                            </FormControl>
-                            {form.formState.errors.location && (
-                                <FormMessage>
-                                    {form.formState.errors.location.message}
-                                </FormMessage>
-                            )}
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name="date"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Schedule</FormLabel>
-                            <Popover>
-                                <PopoverTrigger asChild>
-                                    <FormControl>
-                                        <Button
-                                            variant={"outline"}
-                                            className={cn(
-                                                "w-full justify-start text-left font-normal",
-                                                !field.value && "text-muted-foreground",
-                                            )}
-                                        >
-                                            <CalendarIcon className="mr-2 h-4 w-4" />
-                                            {field.value ? (
-                                                format(field.value, "PPP")
-                                            ) : (
-                                                <span>Pick a date</span>
-                                            )}
-                                        </Button>
-                                    </FormControl>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-auto p-0" align="start">
-                                    <Calendar
-                                        mode="single"
-                                        selected={field.value}
-                                        onSelect={field.onChange}
-                                        initialFocus
-                                    />
-                                </PopoverContent>
-                            </Popover>
-                            {form.formState.errors.date && (
-                                <FormMessage>{form.formState.errors.date.message}</FormMessage>
-                            )}
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name="duration"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Event duration</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                <FormControl>
-                                    <SelectTrigger className="w-full">
-                                        <SelectValue placeholder="Select event duration" />
-                                    </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                    <SelectGroup>
-                                        <SelectLabel>Event Duration</SelectLabel>
-                                        {eventTypes?.map((type, index) => (
-                                            <SelectItem key={index} value={type.value}>
-                                                {type.text}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
-                            {form.formState.errors.duration && (
-                                <FormMessage>
-                                    {form.formState.errors.duration.message}
-                                </FormMessage>
-                            )}
-                        </FormItem>
-                    )}
-                />
-
-
-
-                <FormField
-                    control={form.control}
-                    name="duration_in_minutes"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel className="flex gap-2 items-center">
-                                Duration in Minutes
-                                {/* <MapPin className="size-4" /> */}
-                            </FormLabel>
-                            <FormControl>
-                                <Input type="number" placeholder="Enter event duration in minutes" {...field} value={field.value ?? 0}
-                                       onChange={(e) => {
-                                           const value = e.target.value;
-                                           field.onChange(value ? Number(value) : 0); // Convert to number, or default to 0 if empty
-                                       }} />
-                            </FormControl>
-                            {form.formState.errors.duration_in_minutes && (
-                                <FormMessage>
-                                    {form.formState.errors.duration_in_minutes.message}
-                                </FormMessage>
-                            )}
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name="is_required"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel className="flex gap-2 items-center">
-                                Require Attendance
-                            </FormLabel>
-                            <FormControl>
-                                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                            </FormControl>
-                            {form.formState.errors.is_required && (
-                                <FormMessage>
-                                    {form.formState.errors.is_required.message}
-                                </FormMessage>
-                            )}
-                        </FormItem>
-                    )}
-                />
-
-
-                <FormField
-                    control={form.control}
-                    name="is_check_in_only"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel className="flex gap-2 items-center">
-                                Check In Only
-                            </FormLabel>
-                            <FormControl>
-                                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                            </FormControl>
-                            {form.formState.errors.is_check_in_only && (
-                                <FormMessage>
-                                    {form.formState.errors.is_check_in_only.message}
-                                </FormMessage>
-                            )}
-                        </FormItem>
-                    )}
-                />
-
-
 
                 <Button
                     type="submit"
                     disabled={form.formState.isSubmitting}
                     className="w-full"
                 >
-                    {event
+                    {eventor
                         ? form.formState.isSubmitting
                             ? "Saving changes..."
                             : "Save changes"

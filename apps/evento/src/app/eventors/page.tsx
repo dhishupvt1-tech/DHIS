@@ -54,55 +54,45 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { generateCSV } from "@/lib/utils/utils";
+import BaseLayout from "@/components/BaseLayout";
 
 export default function EventorsPage() {
 
-
-
-
-
-
-
     return (
-        <div className="flex flex-col h-full gap-4 border-red-500">
-            <div className="flex gap-2 items-center">
-                <h1 className="text-2xl font-bold tracking-tighter mr-auto border-red-500">Eventors</h1>
-                {/*<Link href="/events/create">
-                    <Button variant={"ghost"}>
-                        <Plus className="size-4" />
-                        Add
-                    </Button>
-                </Link>*/}
-            </div>
+        <BaseLayout title="Eventors">
+            <BaseLayout.InfoBar text="Eventors are event organizers who can scan attendees"/>
 
-            {/*CONTENT*/}
-            <div className="flex rounded-lg flex-col gap-4 w-full p-8 backdrop-contrast-50 backdrop-opacity-20">
+            <BaseLayout.Content>
+                <div className="flex rounded-lg flex-col gap-4 w-full p-8 backdrop-contrast-50 backdrop-opacity-20">
+                    <div className="flex flex-col gap-1">
+                        <h2 className="font-bold">Banaybanay Student Council</h2>
+                        <p className="font-medium leading-tight opacity-50">The University Student Council of Davao
+                            Oriental State
+                            University Banaybanay Campus</p>
+                    </div>
 
-                <div className="flex flex-col gap-1">
-                    <h2 className="font-bold">Banaybanay Student Council</h2>
-                    <p className="font-medium leading-tight opacity-50">The University Student Council of Davao Oriental State
-                        University Banaybanay Campus</p>
+                    <div className="flex flex-wrap gap-2">
+                        <h3 className="text-sm font-bold">Members</h3>
+                        <Badge variant="secondary">danodoms@gmail.com</Badge>
+                        <Badge variant="secondary">johndoe@gmail.com</Badge>
+                        <Badge variant="secondary">marianophil@gmail.com</Badge>
+                        <Badge variant="secondary">danodoms@gmail.com</Badge>
+                        <Badge variant="secondary">danodoms@gmail.com</Badge>
+                    </div>
+
+
+                    <Button className="flex gap-4 mt-4"><Scan/> Scan Attendees</Button>
+                    <Button className="flex gap-4 -mt-2" variant="ghost"><Pen className="size-4"/>Manage
+                        eventor</Button>
+
                 </div>
 
-                <div className="flex flex-wrap gap-2">
-                    <h3 className="text-sm font-bold">Members</h3>
-                    <Badge variant="secondary">danodoms@gmail.com</Badge>
-                    <Badge variant="secondary">johndoe@gmail.com</Badge>
-                    <Badge variant="secondary">marianophil@gmail.com</Badge>
-                    <Badge variant="secondary">danodoms@gmail.com</Badge>
-                    <Badge variant="secondary">danodoms@gmail.com</Badge>
-                </div>
-
-
-                <Button className="flex gap-4 mt-4"><Scan/> Scan Attendees</Button>
-                <Button className="flex gap-4 -mt-2" variant="ghost"><Pen className="size-4"/>Manage eventor</Button>
-
-            </div>
-
-            <Link href="/eventors/create" className="flex justify-center gap-2 items-center p-4 w-full rounded-lg opacity-50 bg-opacity-10">
-                <Plus className="" />
-                <p className="font-bold">Create Eventor</p>
-            </Link>
-        </div>
+                <Link href="/eventors/create"
+                      className="flex justify-center gap-2 items-center p-4 w-full rounded-lg opacity-50 bg-opacity-10">
+                    <Plus className=""/>
+                    <p className="font-bold">Create Eventor</p>
+                </Link>
+            </BaseLayout.Content>
+        </BaseLayout>
     );
 }

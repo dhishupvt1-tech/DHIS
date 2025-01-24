@@ -31,6 +31,7 @@ import {IdCardIcon} from "@radix-ui/react-icons";
 import {useSession} from "next-auth/react";
 import {Button} from "@/components/ui/button";
 import GoogleIcon from "@mui/icons-material/Google";
+import BaseLayout from "@/components/BaseLayout";
 
 
 export default function Home() {
@@ -38,7 +39,6 @@ export default function Home() {
 	const { data: session } = useSession();
 
 	const user = session?.user;
-
 
 
 	const {
@@ -62,10 +62,12 @@ export default function Home() {
 
 
 	return (
-		<section className="flex flex-col p-2 gap-3 rounded-md h-full">
-			{/* TOP SECTION */}
 
-			<div className="flex justify-between items-center gap-4 mb-4 lg:hidden  bg-opacity-80">
+		<BaseLayout title="evento" topRight={
+			<Account/>
+		}>
+
+			{/*<div className="flex justify-between items-center gap-4 mb-4 lg:hidden  bg-opacity-80">
 				<div className="flex gap-2 items-center">
 					<h1 className="font-bold text-xl text-pretty">{appName}</h1>
 
@@ -77,17 +79,15 @@ export default function Home() {
 						v {version}
 					</h2>
 				</div>
-
-				<Account/>
-			</div>
+			</div>*/}
 
 
-			<div className="flex justify-between items-center">
+			<BaseLayout.Content>
+
+			{/*<div className="flex justify-between items-center">
 				<h2 className="text-4xl text-pretty  font-bold items-center gap-2">
 					Home
 				</h2>
-
-
 				<div className="flex gap-2">
 					<div className="flex-col flex ">
 						<p className="font-bold text-right flex gap-2 items-center py-2 px-3  bg-neutral-500 bg-opacity-10 rounded-md">
@@ -103,7 +103,7 @@ export default function Home() {
 						</p>
 					</div>
 				</div>
-			</div>
+			</div>*/}
 
 
 
@@ -114,7 +114,7 @@ export default function Home() {
 			<FeaturesCarousel />*/}
 
 
-			<div className="font-semibold text-pretty flex items-center text-sm mt-2 gap-2">
+			{/*<div className="font-semibold text-pretty flex items-center text-sm mt-2 gap-2">
 				<PieChart className="size-5"/>
 				<span>Statistics</span>
 			</div>
@@ -136,7 +136,7 @@ export default function Home() {
 
 			<div className="overflow-auto flex-1 rounded-lg">
 				<AttendanceHistory/>
-			</div>
+			</div>*/}
 
 
 
@@ -152,6 +152,7 @@ export default function Home() {
 				<QRCodeGenerator qrCodeText="0000" photo="" name="... ...." />
 			)}
 
-		</section>
+			</BaseLayout.Content>
+		</BaseLayout>
 	);
 }
