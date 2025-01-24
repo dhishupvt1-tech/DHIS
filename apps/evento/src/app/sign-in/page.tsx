@@ -1,21 +1,13 @@
 
-import { CalendarDays, Download, Map, TriangleAlert, Zap } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Image from 'next/image'
-import { motion } from "framer-motion"
-import { AuroraBackground } from "@/components/ui/aurora-background";
-import FeaturesCarousel from "@/components/FeaturesCarousel";
+import { Zap } from "lucide-react";
 import InstallButton from "@/components/InstallButton";
 import SignInButton from "@/components/auth/sign-in-button";
-import {
-    HoverCard,
-    HoverCardContent,
-    HoverCardTrigger,
-} from "@/components/ui/hover-card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import DevInfo from "@/components/DevInfo";
 import {auth} from "@/lib/auth";
 import {redirect} from "next/navigation";
+import GoogleIcon from "@mui/icons-material/Google";
+import {handleSignIn} from "@/lib/actions/authActions";
+import {Button} from "@/components/ui/button";
 
 export default async function SignInPage() {
     const session = await auth()
@@ -36,9 +28,10 @@ export default async function SignInPage() {
             </div>
 
             <SignInButton/>
-           {/* <Button variant="default" onClick={() => signIn("google", {redirectTo: "/"})}>
-                Sign In
-            </Button>*/}
+
+            {/*<form action={()=>handleSignIn()}>
+                <Button type="submit" className="p-8 flex gap-4 rounded-xl"><GoogleIcon className=""/>Continue with Google</Button>
+            </form>*/}
 
             <div className="rounded-lg flex flex-col gap-6">
                 <InstallButton/>

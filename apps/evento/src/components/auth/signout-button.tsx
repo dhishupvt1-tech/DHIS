@@ -1,6 +1,6 @@
 "use client";
 
-import { handleSignOut } from "@/lib/actions/signOutAction";
+import { handleSignOut } from "@/lib/actions/authActions";
 
 export function SignOutButton() {
     return (

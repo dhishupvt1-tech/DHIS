@@ -41,7 +41,7 @@ export default function BottomNav() {
 
 	const linkClasses = (link: string) => `
         flex flex-col items-center  p-2
-        ${activeLink === link ? "opacity-100 bg-neutral-500 rounded-full p-2 px-8 bg-opacity-20" : "opacity-50"}
+        ${activeLink === link ? "opacity-100 bg-neutral-500 rounded-xl px-8 bg-opacity-20" : "opacity-50"}
         transition-all duration-125 ease-in-out hover:opacity-100
     `;
 
@@ -58,18 +58,18 @@ export default function BottomNav() {
 				<div className="max-w-lg mx-auto flex justify-around items-center p-2 ">
 					<Link href="/" className={linkClasses("home")}>
 						<House size={24} />
-						{/* <span className="text-xs  scale-75 tracking-wider font-semibold">Home</span> */}
+						 <span className="text-xs  scale-75 tracking-wider font-semibold">Home</span>
 					</Link>
 
 					<Link href="/records" className={linkClasses("records")}>
 						<GalleryHorizontalEnd size={24} />
-						{/* <span className="text-xs  scale-75 tracking-wider font-semibold">Students</span> */}
+						 <span className="text-xs  scale-75 tracking-wider font-semibold">Records</span>
 					</Link>
 
 
 					<Link href="/eventors" className={linkClasses("eventors")}>
 						<Component size={24} />
-						{/* <span className="text-xs scale-75 tracking-wider font-semibold">Scan</span> */}
+						 <span className="text-xs scale-75 tracking-wider font-semibold">Eventors</span>
 					</Link>
 
 					{/*<Link href="/events" className={linkClasses("events")}>
@@ -79,7 +79,7 @@ export default function BottomNav() {
 
 					<Link href="/profile" className={linkClasses("profile")}>
 						<UserRoundIcon size={24} />
-						{/* <span className="text-xs scale-75 tracking-wider font-semibold">Scan</span> */}
+						 <span className="text-xs scale-75 tracking-wider font-semibold">Profile</span>
 					</Link>
 				</div>
 			</nav>

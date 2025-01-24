@@ -73,8 +73,6 @@ export default function EventorsPage() {
                         Add
                     </Button>
                 </Link>*/}
-
-
             </div>
 
             {/*CONTENT*/}
@@ -100,6 +98,11 @@ export default function EventorsPage() {
                 <Button className="flex gap-4 -mt-2" variant="ghost"><Pen className="size-4"/>Manage eventor</Button>
 
             </div>
+
+            <Link href="/eventors/create" className="flex justify-center gap-2 items-center p-4 w-full rounded-lg opacity-50 bg-opacity-10">
+                <Plus className="" />
+                <p className="font-bold">Create Eventor</p>
+            </Link>
         </div>
     );
 }

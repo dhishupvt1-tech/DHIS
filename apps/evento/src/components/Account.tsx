@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
-import { handleSignOut } from "@/lib/actions/signOutAction";
+import { handleSignOut } from "@/lib/actions/authActions";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -60,10 +60,7 @@ export default function Account() {
                     Settings
                 </DropdownMenuItem>*/}
                     <DropdownMenuItem>
-                        {/*THIS IS THE SIGN OUT BUTTON BUT IN FORM SINCE IT IS USING A SERVER ACTION*/}
-                        <form action={handleSignOut}>
-                            <Button variant="destructive" type="submit" className="w-full">Sign Out</Button>
-                        </form>
+                        <Button variant="destructive" type="submit" className="w-full" onClick={()=>handleSignOut()}>Sign Out</Button>
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
