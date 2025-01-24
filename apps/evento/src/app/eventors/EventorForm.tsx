@@ -67,9 +67,9 @@ export function EventorForm({ eventor, handleClose, handleError }: EventorFormPr
     const { data: session } = useSession();
     const user = session?.user;
 
-    /*if(!eventor){
-        console.log("No eventor passed, this should be a add eventor form")
-    }*/
+    if(!eventor){
+        console.log("No eventor passed, this should be an add eventor form")
+    }
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -104,6 +104,7 @@ export function EventorForm({ eventor, handleClose, handleError }: EventorFormPr
                 const newEventor = { ...baseEventorData };
                 await addEventor(newEventor, user.id);
                 form.reset();
+                toast.success("Eventor successfully created!");
                 return;
             }
 
@@ -114,6 +115,7 @@ export function EventorForm({ eventor, handleClose, handleError }: EventorFormPr
                 ...baseEventorData
             };
             await updateEventor(eventorToUpdate);
+            toast.success("Eventor successfully updated!");
 
             handleClose?.();
         } catch (error) {

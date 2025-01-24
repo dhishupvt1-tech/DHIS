@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { BackgroundGradient } from "@/components/ui/background-gradient";
 import { Vortex } from "@/components/ui/vortex";
-import { IdForm } from "@/components/IdForm";
+import { IdForm } from "@/components/FormSchemaType";
 import { getDeptNameById, getDeptShortNameById } from "@/departments";
 import html2canvas from 'html2canvas'; // Import html2canvas
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";

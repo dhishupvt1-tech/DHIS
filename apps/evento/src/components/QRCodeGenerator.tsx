@@ -28,7 +28,7 @@ const QRCodeGenerator = ({ qrCodeText, photo, name }: QRCodeGeneratorProps) => {
 
     const generateQRCode = async () => {
         try {
-            const data = "dasdasoud"
+            const data = qrCodeText
             const url = await QRCode.toDataURL(data, {
                 width: 200,
                 margin: 2,
