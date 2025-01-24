@@ -48,7 +48,8 @@ import { MapPin } from "lucide-react";
 
 import {type Eventor} from "@prisma/client";
 import {Prisma} from "@prisma/client";
-import {EventorSchema} from "../../../prisma/generated/zod";
+/*import {EventorSchema} from "../../../prisma/generated/zod";*/
+import {EventorSchema} from "@/lib/schemas/EventorSchema"
 import {addEventor, updateEventor} from "@/lib/actions/eventorActions";
 import {useSession} from "next-auth/react";
 
@@ -61,14 +62,14 @@ type EventorFormProps = {
     handleError?: (message: string) => void;
 };
 
-const Eventor: Prisma.EventorSelect={id:true}
-
 export function EventorForm({ eventor, handleClose, handleError }: EventorFormProps) {
 
     const { data: session } = useSession();
     const user = session?.user;
 
-
+    /*if(!eventor){
+        console.log("No eventor passed, this should be a add eventor form")
+    }*/
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -76,77 +77,67 @@ export function EventorForm({ eventor, handleClose, handleError }: EventorFormPr
             ? {
                 name: eventor.name,
                 description: eventor.description,
-                isActive: eventor.isActive,
             }
             : {
                 name: "",
-                description: "",
+                description: ""
             },
     });
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log("pass");
-        console.log(values);
+        console.log("Submitting eventor");
 
-        const newEventor: Omit<Eventor,"id" | "createdAt" | "isActive"> = {
-            name: values.name,
-            description: values.description,
-        };
+        // Ensure user is logged in
+        if (!user?.id) {
+            toast.error("User not logged in or unable to retrieve user data.");
+            return;
+        }
 
-        if (eventor) {
-            const eventorToUpdate: Omit<Eventor,"createdAt"> = {
-                id: eventor.id,
-                isActive: values.isActive,
+        try {
+            const baseEventorData = {
                 name: values.name,
                 description: values.description,
             };
 
-            console.log("eventor to update: ", eventorToUpdate);
-            await updateEventor(eventorToUpdate)
-                .then(() => {
-                    handleClose?.();
-                    console.log("eventor form dialog should close now");
-                })
-                .catch((error) => {
-                    console.error("Error fetching data:", error);
-                    handleError?.("Error updating eventor");
-                });
-        } else {
-
-
-
-
-
-            if(!user?.id){
-                return <div>Loading user...</div>
+            if (!eventor) {
+                // Add new eventor
+                const newEventor = { ...baseEventorData };
+                await addEventor(newEventor, user.id);
+                form.reset();
+                return;
             }
 
-            await addEventor(newEventor,user?.id)
-                .then(() => {
-                    handleClose?.();
-                    console.log("eventor form dialog should close now");
-                    form.reset();
-                })
-                .catch((error) => {
-                    console.error("Error fetching data:", error);
-                    handleError?.("Error adding eventor");
-                });
+            // Update existing eventor
+            const eventorToUpdate: Omit<Eventor, "createdAt"> = {
+                id: eventor.id,
+                isActive: values.isActive,
+                ...baseEventorData
+            };
+            await updateEventor(eventorToUpdate);
+
+            handleClose?.();
+        } catch (error) {
+            console.error("Error processing eventor:", error);
+            handleError?.(eventor ? "Error updating eventor" : "Error adding eventor");
         }
     }
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 border border-red-500 h-full">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 h-full ">
+
+                {/* Name Field */}
                 <FormField
                     control={form.control}
                     name="name"
+
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Name</FormLabel>
                             <FormControl>
-                                <Textarea
-                                    placeholder="Enter event name"
-                                    className="resize-none"
+                                <Input
+                                    placeholder="Enter eventor name"
+                                    className="backdrop-contrast-50 backdrop-opacity-20 bg-transparent border-0"
                                     {...field}
                                 />
                             </FormControl>
@@ -157,6 +148,7 @@ export function EventorForm({ eventor, handleClose, handleError }: EventorFormPr
                     )}
                 />
 
+                {/* Description Field */}
                 <FormField
                     control={form.control}
                     name="description"
@@ -166,8 +158,9 @@ export function EventorForm({ eventor, handleClose, handleError }: EventorFormPr
                             <FormControl>
                                 <Textarea
                                     placeholder="Enter eventor description"
-                                    className="resize-none"
+                                    className="backdrop-contrast-50 backdrop-opacity-20 bg-transparent border-0"
                                     {...field}
+                                    value={field.value ?? ""}
                                 />
                             </FormControl>
                             {form.formState.errors.description && (
@@ -179,11 +172,11 @@ export function EventorForm({ eventor, handleClose, handleError }: EventorFormPr
                     )}
                 />
 
-
+                {/* Submit Button */}
                 <Button
                     type="submit"
                     disabled={form.formState.isSubmitting}
-                    className="w-full"
+                    className="w-full p-4 rounded-lg"
                 >
                     {eventor
                         ? form.formState.isSubmitting

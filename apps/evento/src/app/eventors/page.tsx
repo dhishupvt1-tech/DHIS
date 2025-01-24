@@ -49,7 +49,7 @@ import {
     LogIn,
     LogOut,
     Hourglass,
-    BadgeCheck, Scan, Pen
+    BadgeCheck, Scan, Pen, ChevronLeft, Diamond, Gem
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -59,7 +59,14 @@ import BaseLayout from "@/components/BaseLayout";
 export default function EventorsPage() {
 
     return (
-        <BaseLayout title="Eventors">
+        <BaseLayout title="Eventors" topRight={
+            <Link href="/pricing">
+                <Button className="rounded-full">
+                    <Gem className="mr-2" />
+                   See Pricing
+                </Button>
+            </Link>
+        }>
             <BaseLayout.InfoBar text="Eventors are event organizers who can scan attendees"/>
 
             <BaseLayout.Content>
