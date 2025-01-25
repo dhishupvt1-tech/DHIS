@@ -55,8 +55,41 @@ import Link from "next/link";
 import { useState } from "react";
 import { generateCSV } from "@/lib/utils/utils";
 import BaseLayout from "@/components/BaseLayout";
+import {getEventorsByUserId} from "@/lib/actions/eventorActions";
+import {useSession} from "next-auth/react";
+import {Eventor} from "@prisma/client";
+import ScanDrawer from "@/app/eventors/ScanDrawer";
 
 export default function EventorsPage() {
+
+    const {data: session} = useSession();
+
+    const user = session?.user
+
+
+    const handleGetEventors = async ()=>{
+        if(!user?.id){
+            throw new Error("User ID is required");
+        }
+        return await getEventorsByUserId(user.id);
+    }
+
+
+    const {
+        data: eventors = [],
+        error: eventorsError,
+        isLoading: eventorsIsLoading,
+    } = useQuery<Eventor[]>({
+        queryKey: ["eventors"],
+        queryFn: handleGetEventors,
+    });
+
+
+    function handleScan(){
+
+    }
+
+
 
     return (
         <BaseLayout title="Eventors" topRight={
@@ -70,35 +103,48 @@ export default function EventorsPage() {
             <BaseLayout.InfoBar text="Eventors are event organizers who can scan attendees"/>
 
             <BaseLayout.Content>
-                <div className="flex rounded-lg flex-col gap-4 w-full p-8 backdrop-contrast-50 backdrop-opacity-20">
-                    <div className="flex flex-col gap-1">
-                        <h2 className="font-bold">Banaybanay Student Council</h2>
-                        <p className="font-medium leading-tight opacity-50">The University Student Council of Davao
-                            Oriental State
-                            University Banaybanay Campus</p>
-                    </div>
+                {eventorsIsLoading && <BaseLayout.Loading/>}
+                {eventorsError && <BaseLayout.Error text="Error fetching eventors"/>}
 
-                    <div className="flex flex-wrap gap-2">
-                        <h3 className="text-sm font-bold">Members</h3>
-                        <Badge variant="secondary">danodoms@gmail.com</Badge>
-                        <Badge variant="secondary">johndoe@gmail.com</Badge>
-                        <Badge variant="secondary">marianophil@gmail.com</Badge>
-                        <Badge variant="secondary">danodoms@gmail.com</Badge>
-                        <Badge variant="secondary">danodoms@gmail.com</Badge>
-                    </div>
+                {!eventorsIsLoading && !eventorsError &&
+                    eventors.map((eventor) => (
+
+                            <div key={eventor.id} className="flex rounded-lg flex-col gap-4 w-full p-4 backdrop-contrast-50 backdrop-opacity-20">
+                                <div className="flex flex-col gap-1">
+                                    <h2 className="font-bold">{eventor.name}</h2>
+                                    <p className="font-medium leading-tight opacity-50">{eventor.description}</p>
+                                </div>
+
+                                {/*<div className="flex flex-wrap gap-2">
+                                    <h3 className="text-sm font-bold">Members</h3>
+                                    <Badge variant="secondary">danodoms@gmail.com</Badge>
+                                    <Badge variant="secondary">johndoe@gmail.com</Badge>
+                                    <Badge variant="secondary">marianophil@gmail.com</Badge>
+                                    <Badge variant="secondary">danodoms@gmail.com</Badge>
+                                    <Badge variant="secondary">danodoms@gmail.com</Badge>
+                                </div>*/}
 
 
-                    <Button className="flex gap-4 mt-4"><Scan/> Scan Attendees</Button>
-                    <Button className="flex gap-4 -mt-2" variant="ghost"><Pen className="size-4"/>Manage
-                        eventor</Button>
+                                {/*<Button className="flex gap-4 mt-2 rounded-lg" onClick={()=>handleScan()} ><Scan/> Scan Attendees</Button>*/}
+                                <ScanDrawer eventor={eventor} trigger={(
+                                    <Button className="flex gap-4 w-full mt-2 rounded-lg" onClick={()=>handleScan()} ><Scan/> Scan Attendees</Button>
+                                )} />
 
-                </div>
+
+                                <Button className="flex gap-4 -mt-2" variant="ghost"><Pen className="size-4"/>
+                                    Manage eventor
+                                </Button>
+                            </div>
+                    ))
+                }
+
 
                 <Link href="/eventors/create"
                       className="flex justify-center gap-2 items-center p-4 w-full rounded-lg opacity-50 bg-opacity-10">
                     <Plus className=""/>
                     <p className="font-bold">Create Eventor</p>
                 </Link>
+
             </BaseLayout.Content>
         </BaseLayout>
     );

@@ -7,17 +7,6 @@ import {prismaQueryWrapper} from "@/lib/actions/prismaQueryWrapper";
 
 
 
-/*export async function addEventor(eventor: Omit<Eventor,"createdAt" | "isActive">, ownerUserId:string){
-    const eventorUserData: Omit<EventorUser, "id" | "createdAt"> = {eventorId:eventor.id,userId:ownerUserId,role:UserRole.OWNER}
-
-    const [addEventor, addUserToEventor] = await prisma.$transaction([
-        prisma.eventor.create({data:eventor}),
-        prisma.eventorUser.create({data:eventorUserData})
-    ])
-}*/
-
-
-
 export async function addEventor(eventor: Omit<Eventor,"id" |"createdAt" | "isActive">, ownerUserId:string){
      const result =  await prisma.eventor.create({
          data:{
@@ -32,6 +21,32 @@ export async function addEventor(eventor: Omit<Eventor,"id" |"createdAt" | "isAc
      })
 
     return result;
+}
+
+
+export async function getEventorsByUserId(userId: string) {
+    try {
+        const eventors = await prisma.eventor.findMany({
+            where: {
+                eventorsUsers: {
+                    some: {
+                        userId: userId,
+                    },
+                },
+            },
+            include: {
+                eventorsUsers: true, // Optional: Include related EventorUser records
+                events: true,       // Optional: Include related Event records
+            },
+        });
+
+
+        console.log(eventors);
+        return eventors;
+    } catch (error) {
+        console.error("Error fetching eventors:", error);
+        throw error;
+    }
 }
 
 

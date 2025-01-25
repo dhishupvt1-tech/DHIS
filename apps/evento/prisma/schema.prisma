@@ -15,13 +15,13 @@ model Attendance {
   date            DateTime @db.Date
   createdAt       DateTime @default(now()) @db.Timestamptz(6)
   isActive        Boolean  @default(true)
-  eventId         BigInt
+  eventorId       BigInt
   userId          String
   scannedByUserId String
 
-  event     Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  user      User  @relation("UserAttendance", fields: [userId], references: [id], onDelete: Cascade)
-  scannedBy User  @relation("ScannerAttendance", fields: [scannedByUserId], references: [id], onDelete: Cascade)
+  user      User    @relation("UserAttendance", fields: [userId], references: [id], onDelete: Cascade)
+  scannedBy User    @relation("ScannerAttendance", fields: [scannedByUserId], references: [id], onDelete: Cascade)
+  eventor   Eventor @relation(fields: [eventorId], references: [id], onDelete: Cascade)
 }
 
 model Event {
@@ -36,8 +36,7 @@ model Event {
   eventorId   BigInt
   isActive    Boolean  @default(true)
 
-  eventor    Eventor      @relation(fields: [eventorId], references: [id], onDelete: Cascade)
-  attendance Attendance[]
+  eventor Eventor @relation(fields: [eventorId], references: [id], onDelete: Cascade)
 }
 
 model Eventor {
@@ -49,6 +48,7 @@ model Eventor {
 
   events        Event[]
   eventorsUsers EventorUser[]
+  attendance    Attendance[]
 }
 
 model EventorUser {

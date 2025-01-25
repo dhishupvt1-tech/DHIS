@@ -23,7 +23,7 @@ export default function Account() {
     if(!session?.user){
         return(
             <Link href="/sign-in" className="lg:w-full">
-                <Button className="lg:w-full flex gap-2" variant="default">
+                <Button className="lg:w-full flex gap-2 rounded-full" variant="default">
                     <GoogleIcon className=""/>Sign in
                 </Button>
             </Link>

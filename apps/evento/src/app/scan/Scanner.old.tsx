@@ -335,8 +335,8 @@ export default function Scanner() {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center relative ">
-            <div id="reader" ref={setScannerRef} style={{border:"none",outline:"none", boxShadow:"none"}} className="w-full max-w-sm border-none border-2 border-transparent outline-none rounded-lg backdrop-contrast-50 backdrop-opacity-20" />
+        <div className="flex flex-col items-center justify-center relative">
+            <div id="reader" ref={setScannerRef} className="w-full max-w-sm border-none outline-none rounded-md" />
 
 
 
