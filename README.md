@@ -13,6 +13,9 @@
 - **User Roles and Permissions**: Different access levels for main admin, secondary admin, and officers with restricted features to ensure security and proper data management.
 - **Responsive Design**: Fully responsive design to ensure usability on any device, including desktops, tablets, and smartphones.
 
+## Read the Case Study here
+https://www.danodoms.xyz/case-studies/evento
+
 ## Screenshots
 
 ![Untitled-2](https://github.com/user-attachments/assets/c56edd37-96a2-4ef9-ba52-424fba481635)
